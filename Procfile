@@ -1,1 +1,1 @@
-web: gunicorn garcode_project.wsgi --log-file -
+web: gunicorn garcode_project.wsgi

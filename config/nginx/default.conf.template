@@ -1,0 +1,35 @@
+# Upstream for uWSGI
+upstream uwsgi_app {
+    server unix:/code/uwsgi_app.sock;
+}
+
+# Redirect all HTTP requests to HTTPS
+server {
+    listen 80;
+    server_name www.garcode1.com garcode1.com;
+
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+# Serve HTTPS requests
+server {
+    listen 443 ssl;
+    server_name www.garcode1.com garcode1.com;
+
+    ssl_certificate /code/ssl/garcode_project.crt;
+    ssl_certificate_key /code/ssl/garcode_project.key;
+
+    error_log stderr warn;
+    access_log /dev/stdout main;
+
+    location / {
+        include /etc/nginx/uwsgi_params;
+        uwsgi_pass uwsgi_app;
+    }
+
+    location /staticfiles/ {
+        alias /code/staticfiles;
+    }
+}

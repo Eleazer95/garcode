@@ -14,19 +14,30 @@ from pathlib import Path
 import os
 import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-3$lx-*5tl(g4@2x9n_-7z#($is2e#9279ep0f2y(*@z++e!jo8"
+SECRET_KEY = "#284b93$885pqr3$lx-*5tl(g4@2x9n_-7z#($is2e#9279ep0f2y(*@z++e!jo8"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+#DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app','127.0.0.1']
+ALLOWED_HOSTS = []
+
+# base.py
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 
 # Application definition
@@ -39,8 +50,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "main",
-    'django_extensions',
     'whitenoise.runserver_nostatic',
+    'django.contrib.postgres'
 ]
 
 MIDDLEWARE = [
@@ -78,25 +89,23 @@ WSGI_APPLICATION = "garcode_project.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-        'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
+"""DATABASES={
+    'default':{
+        'ENGINE':'django.db.backends.sqlite3',
+        'NAME':BASE_DIR/'db.sqlite3',
     }
-}
+}"""
 
 """DATABASES = {
     "default": {
-        "ENGINE":"django.db.backends.postgresql",
-        "NAME":"railway",
-        "USER":"postgres",
-        "PASSWORD":"PxmFIiMvzCtZmfDLLmkuBSABctpAadzB",
-        "HOST":"postgres.railway.internal",
-        "PORT":"5432"
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME":'Pastor Gar',
+        "USER":'Pastor Gar',
+        "PASSWORD":'pastorgar1995',
     }
-}
-"""
+}"""
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -132,7 +141,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'main/static')]
 STATIC_ROOT = BASE_DIR / 'staticfiles'  # Add this line
 
